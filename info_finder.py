@@ -1,9 +1,8 @@
-import requests, json, datetime
-
+import requests, json, datetime, yaml
 
 def get_times(route, stop_id):
 	time_list = []
-	payload = {"key": yaml.load(open("config.yml")),
+	payload = {"key": yaml.load(open("keys.yml"))["bus"],
 				"format": "json",
 				"rt": route,
 				"stpid": stop_id }
@@ -26,5 +25,3 @@ def format_time(time):
 	hour = int(time[9:11])
 	minute = int(time[12:14])
 	return datetime.datetime(year, month, day, hour, minute)
-
-print(get_times(9, 14619))
