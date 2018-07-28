@@ -1,5 +1,3 @@
-from tkinter import *
-from tkinter import ttk
 import yaml
 from info_finder import get_bus_times, get_train_times
 
@@ -39,8 +37,4 @@ def formatted_train_times():
 	return output_times
 
 if __name__ == "__main__":
-	root = Tk()
-	for i in print_times():	
-		w = Label(root, text=i, font=("Helvetica", 30), borderwidth=1, relief="solid")
-		w.pack()
-	root.mainloop()
+    print(print_times())

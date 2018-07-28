@@ -2,10 +2,12 @@ import requests, json, datetime, yaml
 
 def get_bus_times(route, stop_id):
 	time_list = []
-	payload = {"key": yaml.load(open("keys.yml"))["bus"],
-				"format": "json",
-				"rt": route,
-				"stpid": stop_id }
+	payload = {
+        "key": yaml.load(open("keys.yml"))["bus"],
+        "format": "json",
+        "rt": route,
+        "stpid": stop_id
+    }
 	url = "http://www.ctabustracker.com/bustime/api/v2/getpredictions/"
 	response = json.loads(requests.get(url, params=payload).text)["bustime-response"]
 	if "prd" not in response:
@@ -29,6 +31,7 @@ def get_train_times(stop_id):
 def wait_time(prediction_time, current_time):
 	return (format_bus_time(prediction_time) - format_bus_time(current_time)).seconds // 60
 
+# TODO: cleanup lol
 def format_train_time(time):
 	year = int(time[:4])
 	month = int(time[5:7])
