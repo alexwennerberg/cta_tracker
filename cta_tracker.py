@@ -37,4 +37,5 @@ def formatted_train_times():
 	return output_times
 
 if __name__ == "__main__":
-    print(print_times())
+    for time in print_times():
+        print(time)
