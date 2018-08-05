@@ -14,7 +14,7 @@ def formatted_bus_times():
         route = stop["route"]
         id = stop["id"]
         bus_string += (" ".join([stop["direction"][0],
-                                " ".join(str(x).rjust(2) for x in get_bus_times(route, id)[:2])]))
+                                " ".join(str(x).rjust(2) for x in get_bus_times(route, id)[:2])])).ljust(7)
         bus_string += "|"
     return bus_string[:len(bus_string)-1]
 
@@ -25,7 +25,7 @@ def formatted_train_times():
         station_id = stop["id"]
         train_string += (" ".join([
             stop["direction"][0],
-            " ".join(str(x).rjust(2) for x in get_train_times(station_id)[:2])]))
+            " ".join(str(x).rjust(2) for x in get_train_times(station_id)[:2])])).ljust(7)
         train_string += "|"
     return train_string[:len(train_string)-1]
 
