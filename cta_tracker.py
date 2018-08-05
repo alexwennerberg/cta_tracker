@@ -5,41 +5,34 @@ def get_config_data():
     with open("config.yml") as f:
         return yaml.load(f)
 
-def print_times():
-    return formatted_bus_times() + formatted_train_times()
     
 def formatted_bus_times():
     output_times = []
     config_data = get_config_data()
+    bus_string = ""
     for stop in config_data["buses"]:
         route = stop["route"]
         id = stop["id"]
-        bus_string = (" ".join([str(route), 
-                            stop["direction"], 
-                            stop["label"], 
-                            ", ".join(str(x) for x in get_bus_times(route, id))]))
-        bus_string = bus_string + " minutes"
-        output_times.append(bus_string)
-    return output_times
+        bus_string += (" ".join([stop["direction"][0],
+                                " ".join(str(x).rjust(2) for x in get_bus_times(route, id)[:2])]))
+        bus_string += "|"
+    return bus_string[:len(bus_string)-1]
 
 def formatted_train_times():
-    output_times = []
     config_data = get_config_data()
-    for stop in config_data["trains"]:
+    train_string = ""
+    for stop in config_data["trains"][0]["stops"]:
         station_id = stop["id"]
-        bus_string = (" ".join([stop["route"],
-                            stop["label"], 
-                            "towards", 
-                            stop["direction"], 
-                            ", ".join(str(x) for x in get_train_times(station_id))]))
-        bus_string = bus_string + " minutes"
-        output_times.append(bus_string)
-    return output_times
+        train_string += (" ".join([
+            stop["direction"][0],
+            " ".join(str(x).rjust(2) for x in get_train_times(station_id)[:2])]))
+        train_string += "|"
+    return train_string[:len(train_string)-1]
 
 # 16x2 LCD screen
 # O XX XX F XX XX BLUE LINE
 # E XX XX W XX XX 74 BUS
 
 if __name__ == "__main__":
-    for time in print_times():
-        print(time)
+    for line in formatted_train_times(), formatted_bus_times():
+        print(line)
