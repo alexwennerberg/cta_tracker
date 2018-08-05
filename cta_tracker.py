@@ -15,8 +15,8 @@ def formatted_bus_times():
         id = stop["id"]
         bus_string += (" ".join([stop["direction"][0],
                                 " ".join(str(x).rjust(2) for x in get_bus_times(route, id)[:2])])).ljust(7)
-        bus_string += "|"
-    return bus_string[:len(bus_string)-1]
+        bus_string += " |"
+    return bus_string[:len(bus_string)-2]
 
 def formatted_train_times():
     config_data = get_config_data()
@@ -26,8 +26,8 @@ def formatted_train_times():
         train_string += (" ".join([
             stop["direction"][0],
             " ".join(str(x).rjust(2) for x in get_train_times(station_id)[:2])])).ljust(7)
-        train_string += "|"
-    return train_string[:len(train_string)-1]
+        train_string += " |"
+    return train_string[:len(train_string)-2]
 
 # 16x2 LCD screen
 # O XX XX F XX XX BLUE LINE
